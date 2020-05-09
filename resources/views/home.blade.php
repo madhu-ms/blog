@@ -3,20 +3,23 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                       <center> Welcome  <b>{{ Auth::user()->name }}</b> You are logged in!</center>
+      @if($articles->count() > 0)
+        @foreach($articles as $articles)
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">{{$articles->name}}</div>
+                    <div class="card-body">
+                    <p>Category : {{$articles->category->name}} &nbsp; 
+                   User: {{$articles->user->name}} &nbsp
+                   Published Date: {{$articles->created_at}}</p>
+                    {{ substr($articles->description, 0, 500) }}
+                    <a href="{{ route('viewarticle',$articles->id) }}">Read more..</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
+      @endif
     </div>
 </div>
 @endsection

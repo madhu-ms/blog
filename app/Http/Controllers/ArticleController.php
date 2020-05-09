@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
+
+
 
 class ArticleController extends Controller
 {
@@ -13,7 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::all();
+        return view('articles.index', compact('articles'));
     }
 
     /**
@@ -23,7 +27,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $articles = Article::all();
+        $categories = Category::all();
+        return view('articles.create', compact('articles','categories'));
     }
 
     /**
@@ -34,7 +40,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Article::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'category_id'=>$request->category_id,
+            'user_id'=>$request->user_id
+        ]);
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -45,7 +57,8 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $articles = Article::findOrFail($id);
+        return view('articles.show',compact('articles'));
     }
 
     /**
@@ -56,7 +69,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $articles = Article::findOrFail($id);
+        $categories = Category::all();
+        return view('articles.edit',compact('articles','categories'));
     }
 
     /**
@@ -68,7 +83,14 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $articles = Article::findOrFail($id);
+        $articles->update([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'category_id'=>$request->category_id,
+            'user_id'=>$request->user_id
+        ]);
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -79,6 +101,8 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $articles = Article::find($id);
+        $articles->delete();
+        return redirect()->route('articles.index');
     }
 }

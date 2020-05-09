@@ -5,8 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Users Overview</div>
-                <div class="card-body"><a href="{{ route('users.create') }}" class="btn btn-info"> Add User </a></div>
+                <div class="card-header">Categories Overview</div>
+                <div class="card-body"><a href="{{ route('categories.create') }}" class="btn btn-info"> Add Category </a></div>
                 
 
                 <div class="card-body">
@@ -18,22 +18,20 @@
                        <table class="table">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                         
-                        @if($users->count() > 0)
-                        @foreach ($users as $user)
+                        @if($categories->count() > 0)
+                        @foreach ($categories as $category)
                             <tr>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->role->name}}</td>
-                            <td><a class="btn  btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                                <form action="{{ route('users.destroy',$user->id) }}" method="POST" style="display:inline">
+                            <td>{{ $category->id }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td><a class="btn  btn-primary" href="{{ route('categories.edit',$category->id) }}">Edit</a>
+                                <form action="{{ route('categories.destroy',$category->id) }}" method="POST" style="display:inline">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }} 
                                 <input type="submit" value="Delete" class="btn  btn-danger" onclick="return confirm('Are you sure?')" />
@@ -44,7 +42,7 @@
                         @endforeach
                         @else
                             <tr>
-                            <td colspan="3" align="center">Currently there are no users</td>
+                            <td colspan="3" align="center">Currently there are no categories</td>
                            </tr>
                         @endif
                         </tbody>

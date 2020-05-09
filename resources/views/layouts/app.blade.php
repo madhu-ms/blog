@@ -49,26 +49,29 @@
                                 </li>
                             @endif
                         @else
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('articles.index') }}">{{ __('Articles') }}</a>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('categories.index') }}">{{ __('Categories') }}</a>
+                                <a @if(Request::segment(1)=='articles') style="text-decoration:underline" @endif
+                                class="nav-link" href="{{ route('articles.index') }}">{{ __('Articles') }}</a>
                             </li>
                             <li class="nav-item">
-                          
-                                <a  @if(Request::segment(1)=='users') style="text-decoration:underline" @endif 
-                                    class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                                <a @if(Request::segment(1)=='categories') style="text-decoration:underline" @endif 
+                                class="nav-link" href="{{ route('categories.index') }}">{{ __('Categories') }}</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a @if(Request::segment(1)=='users') style="text-decoration:underline" @endif 
+                                 class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                            </li>
+                            &nbsp;&nbsp;&nbsp;
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('login') }}">{{ __('Profile') }}</a>
+                                  
 
                                    <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
